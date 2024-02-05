@@ -1,4 +1,4 @@
-package lab_assignment_group_1
+package main
 
 import (
 	"fmt"
@@ -7,77 +7,73 @@ import (
 )
 
 func main() {
-	stages := []string{
-		"early planning (1-6 months in)",
-		"midway through planning (7-12 months in)",
-		"final stages of planning (less than a month away)",
+	fitnessLevels := []string{
+		"Beginner",
+		"Intermediate",
+		"Advanced",
 	}
 
-	activities := [][]string{
-		{
-			"Choosing your wedding theme and colors",
-			"Tasting sessions with potential caterers",
-			"Venue scouting for the ceremony and reception",
-		},
-		{
-			"DIY wedding invitation design workshop",
-			"Wedding dress and suit fitting day",
-			"Playlist creation for ceremony and reception",
-		},
-		{
-			"DIY centerpiece and decoration making session",
-			"Final walkthrough of the wedding day timeline",
-			"Confirming final details with all vendors",
-		},
+	exercises := [][]string{
+		{"Start your workout with a brisk walk for 20-30 minutes. Additionally, cycling or using the elliptical machine is beneficial for overall cardiovascular health."},
+		{"Incorporate bodyweight exercises such as squats, lunges, and push-ups. Include dumbbell shoulder presses and seated rows to build strength. Plank holds for 15-30 seconds are great for core activation."},
+		{"Advance your cardiovascular routine with jogging, stair climbing, or higher-intensity sessions on the elliptical machine lasting 30-45 minutes."},
+		{"For advanced strength training, consider exercises like deadlifts, bench press, pull-ups, barbell squats, overhead press, dumbbell rows, and leg presses."},
+		{"Engage in high-intensity interval training (HIIT), sprinting, or advanced spin classes for a challenging cardiovascular workout."},
+		{"Take your strength training to the next level with Olympic lifts (Clean & Jerk, Snatch), squat variations, advanced plyometrics, heavy deadlifts, and advanced bodyweight movements."},
 	}
 
-	tips := [][]string{
-		{
-			"Create a mood board to visualize your theme and color palette.",
-			"Rate each dish based on flavor, presentation, and uniqueness.",
-			"Take photos and notes on each venue's pros and cons for comparison.",
-		},
-		{
-			"Gather inspiration and use design software or templates for a personal touch.",
-			"Bring a trusted friend or family member for honest feedback and support.",
-			"Include a mix of genres and eras to cater to all guests' musical tastes.",
-		},
-		{
-			"Collect materials from craft stores or nature for unique, personal touches.",
-			"Discuss each moment with your partner and vendors to ensure smooth execution.",
-			"Review contracts and confirmations to avoid last-minute surprises.",
-		},
+	coreExercises := [][]string{
+		{},
+		{"For core activation, include exercises like Russian twists, leg raises, and bicycle crunches. Plank with shoulder taps, mountain climbers, and reverse crunches can also enhance your core workout."},
+		{"Progress to hanging leg raises, dragon flags, woodchoppers, side plank with leg lift, medicine ball twists, and hollow body holds for advanced core strength."},
+		{"Explore advanced core exercises such as dragon flags, windshield wipers, ab rollouts, plank variations (front, side, reverse), Russian twist with a medicine ball, and V-ups."},
+		{"Challenge your core with hanging windshield wipers, barbell Russian twists, dragon flag progressions, toes-to-bar, and L-sit holds."},
+		{"Include hanging leg raises with twists, barbell woodchoppers, windmills, Turkish get-ups, plank with row (Renegade rows), and ab wheel rollouts for a comprehensive core workout."},
 	}
 
-	fmt.Println("Welcome to the Wedding Planner's Ultimate Preparation Game!")
-	fmt.Println("To get started, please tell us how far along you are in your wedding planning journey:")
-
-	for i, stage := range stages {
-		fmt.Printf("%d - %s\n", i+1, stage)
+	flexibilityAndMobility := [][]string{
+		{"Improve flexibility by stretching major muscle groups and practicing basic yoga poses. This will enhance joint mobility and overall range of motion."},
+		{"Dynamically stretch and continue practicing yoga for improved mobility. Consider incorporating foam rolling and Pilates into your routine for enhanced flexibility."},
+		{"Engage in advanced yoga poses for deep stretches, joint mobility exercises, dynamic stretching routines, and active isolated stretching for improved flexibility."},
+		{"Incorporate Pilates for core stability, dynamic stretching routines, foam rolling, advanced yoga poses, and proprioceptive neuromuscular facilitation (PNF) stretching for increased flexibility."},
+		{"Enhance flexibility with assisted stretching using resistance bands, myofascial release techniques, dynamic stretching routines, advanced yoga flows, and the practice of Tai Chi."},
+		{"Take your flexibility to the next level with advanced PNF stretching, Yin Yoga, functional range conditioning (FRC), Gyrotonic exercises, and include elements of Capoeira for joint mobility."},
 	}
 
-	var stageInput int
+	fmt.Println("Welcome to the Exercise Progression Guide for Different Fitness Levels!")
+	fmt.Println("To get started, please choose your fitness level:")
+	for i, level := range fitnessLevels {
+		fmt.Printf("%d - %s\n", i+1, level)
+	}
 
-	fmt.Println("Enter the number corresponding to your stage (or 0 to exit):")
-	fmt.Scan(&stageInput)
+	var levelInput int
+	fmt.Println("Enter the number corresponding to your fitness level (or 0 to exit):")
+	fmt.Scan(&levelInput)
 
-	if stageInput == 0 {
-		fmt.Println("Exiting the Wedding Planner's Game. Happy planning!")
+	if levelInput == 0 {
+		fmt.Println("Exiting the Exercise Progression Guide. Keep up the great work!")
 		return
-	} else if stageInput < 1 || stageInput > len(stages) {
-		fmt.Println("Invalid input. Please restart the game and select a valid option.")
+	} else if levelInput < 1 || levelInput > len(fitnessLevels) {
+		fmt.Println("Invalid input. Please restart the guide and select a valid option.")
 		return
 	}
-	stageIndex := stageInput - 1
+	levelIndex := levelInput - 1
 
-	fmt.Printf("Based on your selection, here are activities suitable for %s:\n", stages[stageIndex])
+	fmt.Printf("Based on your fitness level (%s), here are recommended exercises:\n", fitnessLevels[levelIndex])
 
-	src := rand.NewSource(time.Now().UnixNano())
+	src := rand.NewSource(time.Now().UnixMicro())
 	r := rand.New(src)
-	activityIndex := r.Intn(len(activities[stageIndex]))
-	chosenActivity := activities[stageIndex][activityIndex]
 
-	fmt.Printf("Your recommended activity is: %s.\n", chosenActivity)
-	fmt.Println("Professional Tip:", tips[stageIndex][activityIndex])
-	fmt.Println("Thank you for using the Wedding Planner's Game! Wishing you a beautiful journey to your big day.")
+	exerciseIndex := r.Intn(len(exercises[levelIndex]))
+	chosenExercise := exercises[levelIndex][exerciseIndex]
+
+	fmt.Printf("Your recommended exercise is: %s\n", chosenExercise)
+
+	if len(coreExercises[levelIndex]) > 0 {
+		fmt.Printf("Additional core exercise suggestions: %v\n", coreExercises[levelIndex])
+	}
+
+	fmt.Printf("For flexibility and mobility: %v\n", flexibilityAndMobility[levelIndex])
+
+	fmt.Println("Thank you for using the Exercise Progression Guide! Keep striving for your fitness goals.")
 }
