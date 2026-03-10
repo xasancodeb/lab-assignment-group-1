@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,94 +27,199 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#faf9f7] flex flex-col">
-      {/* Nav */}
-      <nav className="px-6 py-5 border-b border-stone-200 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          StyleBook
-        </Link>
-        <p className="text-sm text-stone-500">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-stone-900 font-medium hover:underline">
-            Sign up
-          </Link>
-        </p>
-      </nav>
+    <main style={{ minHeight: "100vh", backgroundColor: "#FAF7F2", display: "flex", flexDirection: "column" }}>
+      <Navbar />
 
-      {/* Form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-stone-900 mb-2">Welcome back</h1>
-            <p className="text-stone-500">Log in to manage your bookings and profile.</p>
-          </div>
+      <div style={{ flex: 1, display: "flex" }}>
+        {/* Left: editorial panel */}
+        <div
+          style={{
+            display: "none",
+            flex: "0 0 50%",
+            backgroundColor: "#18120E",
+            padding: "64px 56px",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+          }}
+          className="login-left-panel"
+        >
+          <blockquote style={{ color: "#FAF7F2" }}>
+            <p style={{ fontSize: "2rem", fontWeight: 700, lineHeight: 1.2, marginBottom: "24px", letterSpacing: "-0.01em" }}>
+              &ldquo;Style is a way to say who you are without having to speak.&rdquo;
+            </p>
+            <cite style={{ fontSize: "0.875rem", color: "#897870", fontStyle: "normal" }}>— Rachel Zoe</cite>
+          </blockquote>
+        </div>
 
-          {/* Social logins */}
-          <div className="space-y-3 mb-8">
-            <button className="w-full flex items-center justify-center gap-3 border border-stone-200 rounded-xl py-3 text-sm font-medium text-stone-700 hover:bg-stone-50 transition-colors">
-              <GoogleIcon />
-              Continue with Google
-            </button>
-            <button className="w-full flex items-center justify-center gap-3 border border-stone-200 rounded-xl py-3 text-sm font-medium text-stone-700 hover:bg-stone-50 transition-colors">
-              <AppleIcon />
-              Continue with Apple
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4 mb-8">
-            <div className="flex-1 h-px bg-stone-200" />
-            <span className="text-xs text-stone-400 uppercase tracking-wider">or</span>
-            <div className="flex-1 h-px bg-stone-200" />
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-stone-700 mb-1.5">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-              />
+        {/* Right: form */}
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
+          <div style={{ width: "100%", maxWidth: "448px" }}>
+            <div style={{ marginBottom: "32px" }}>
+              <h1 style={{ fontSize: "1.875rem", fontWeight: 700, color: "#18120E", marginBottom: "8px" }}>Welcome back</h1>
+              <p style={{ color: "#897870" }}>Log in to manage your bookings and profile.</p>
             </div>
 
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-sm font-medium text-stone-700">
-                  Password
+            {/* Social logins */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
+              <button
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "12px",
+                  border: "1px solid #EDE6DC",
+                  borderRadius: "12px",
+                  padding: "12px 16px",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "#897870",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                  transition: "background-color 0.15s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#F5EDE7")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "white")}
+              >
+                <GoogleIcon />
+                Continue with Google
+              </button>
+              <button
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "12px",
+                  border: "1px solid #EDE6DC",
+                  borderRadius: "12px",
+                  padding: "12px 16px",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "#897870",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                  transition: "background-color 0.15s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#F5EDE7")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "white")}
+              >
+                <AppleIcon />
+                Continue with Apple
+              </button>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "32px" }}>
+              <div style={{ flex: 1, height: "1px", backgroundColor: "#EDE6DC" }} />
+              <span style={{ fontSize: "0.75rem", color: "#897870", textTransform: "uppercase", letterSpacing: "0.05em" }}>or</span>
+              <div style={{ flex: 1, height: "1px", backgroundColor: "#EDE6DC" }} />
+            </div>
+
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                  Email
                 </label>
-                <Link href="#" className="text-xs text-stone-500 hover:text-stone-800 hover:underline">
-                  Forgot password?
-                </Link>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  style={{
+                    width: "100%",
+                    border: "1px solid #EDE6DC",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                    fontSize: "1rem",
+                    color: "#18120E",
+                    backgroundColor: "white",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                  onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                />
               </div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-              />
-            </div>
 
-            {error && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
-                {error}
-              </p>
-            )}
+              <div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
+                  <label style={{ fontSize: "0.875rem", fontWeight: 500, color: "#18120E" }}>
+                    Password
+                  </label>
+                  <Link href="#" style={{ fontSize: "0.75rem", color: "#BF6B4A", textDecoration: "none" }}>
+                    Forgot password?
+                  </Link>
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  style={{
+                    width: "100%",
+                    border: "1px solid #EDE6DC",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                    fontSize: "1rem",
+                    color: "#18120E",
+                    backgroundColor: "white",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                  onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-stone-900 text-white py-3 rounded-xl font-medium hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-            >
-              {loading ? "Logging in…" : "Log In"}
-            </button>
-          </form>
+              {error && (
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "#9B3E28",
+                    backgroundColor: "#FEF2EE",
+                    border: "1px solid #F5C9BC",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                  }}
+                >
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#BF6B4A",
+                  color: "white",
+                  padding: "12px 16px",
+                  borderRadius: "9999px",
+                  fontWeight: 500,
+                  border: "none",
+                  cursor: loading ? "not-allowed" : "pointer",
+                  opacity: loading ? 0.5 : 1,
+                  marginTop: "8px",
+                  fontSize: "1rem",
+                  transition: "background-color 0.15s",
+                }}
+                onMouseEnter={(e) => { if (!loading) e.currentTarget.style.backgroundColor = "#A85A3B"; }}
+                onMouseLeave={(e) => { if (!loading) e.currentTarget.style.backgroundColor = "#BF6B4A"; }}
+              >
+                {loading ? "Logging in…" : "Log In"}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          .login-left-panel {
+            display: flex !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }

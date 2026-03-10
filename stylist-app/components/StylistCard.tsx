@@ -3,68 +3,115 @@ import { Stylist } from "@/lib/data";
 
 export default function StylistCard({ stylist }: { stylist: Stylist }) {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden border border-stone-100 hover:shadow-lg transition-shadow group">
+    <div
+      style={{
+        background: "#fff",
+        borderRadius: "18px",
+        overflow: "hidden",
+        border: "1px solid #EDE6DC",
+        transition: "box-shadow 0.2s, transform 0.2s",
+        cursor: "pointer",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(24,18,14,0.10)";
+        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+        (e.currentTarget as HTMLDivElement).style.transform = "none";
+      }}
+    >
       {/* Cover */}
-      <div
-        className="h-32 relative"
-        style={{ backgroundColor: stylist.coverColor }}
-      >
+      <div style={{ height: 110, background: stylist.coverColor, position: "relative" }}>
         {/* Avatar */}
         <div
-          className="absolute -bottom-8 left-5 w-16 h-16 rounded-full border-4 border-white flex items-center justify-center text-xl font-bold text-white"
-          style={{ backgroundColor: stylist.avatar }}
+          style={{
+            position: "absolute", bottom: -22, left: 18,
+            width: 52, height: 52, borderRadius: "50%",
+            border: "3px solid #fff",
+            background: stylist.avatar,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "#fff", fontWeight: 700, fontSize: "1.1rem",
+          }}
         >
           {stylist.name.charAt(0)}
         </div>
-        {stylist.available ? (
-          <span className="absolute top-3 right-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-            Available
-          </span>
-        ) : (
-          <span className="absolute top-3 right-3 bg-stone-400 text-white text-xs px-2 py-1 rounded-full font-medium">
-            Booked
-          </span>
-        )}
+
+        {/* Availability badge */}
+        <span
+          style={{
+            position: "absolute", top: 10, right: 10,
+            background: stylist.available ? "#2D6A4F" : "#897870",
+            color: "#fff", fontSize: "0.68rem",
+            padding: "3px 10px", borderRadius: "999px",
+            fontFamily: "system-ui, sans-serif", fontWeight: 600,
+            letterSpacing: "0.04em",
+          }}
+        >
+          {stylist.available ? "Available" : "Booked"}
+        </span>
       </div>
 
       {/* Content */}
-      <div className="pt-10 px-5 pb-5">
-        <h3 className="font-bold text-stone-900 text-lg">{stylist.name}</h3>
-        <p className="text-stone-500 text-sm mb-3">{stylist.tagline}</p>
+      <div style={{ padding: "32px 18px 18px" }}>
+        <h3 style={{ fontWeight: 700, color: "#18120E", fontSize: "1.05rem", marginBottom: "3px" }}>
+          {stylist.name}
+        </h3>
+        <p style={{ color: "#897870", fontSize: "0.82rem", marginBottom: "12px", fontFamily: "system-ui, sans-serif", fontStyle: "italic" }}>
+          {stylist.tagline}
+        </p>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1 mb-4">
+        {/* Specialty tags */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", marginBottom: "14px" }}>
           {stylist.specialty.slice(0, 2).map((s) => (
             <span
               key={s}
-              className="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded-full"
+              style={{
+                background: "#F5EDE7", color: "#BF6B4A",
+                fontSize: "0.7rem", padding: "3px 10px", borderRadius: "999px",
+                fontFamily: "system-ui, sans-serif", fontWeight: 500,
+              }}
             >
               {s}
             </span>
           ))}
         </div>
 
-        {/* Meta */}
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-1">
-            <span className="text-amber-500">★</span>
-            <span className="font-semibold text-stone-800">{stylist.rating}</span>
-            <span className="text-stone-400">({stylist.reviews})</span>
+        {/* Meta row */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "4px", fontFamily: "system-ui, sans-serif", fontSize: "0.82rem" }}>
+            <span style={{ color: "#BF6B4A" }}>★</span>
+            <span style={{ fontWeight: 600, color: "#18120E" }}>{stylist.rating}</span>
+            <span style={{ color: "#C9BAB0" }}>({stylist.reviews})</span>
           </div>
-          <span className="text-stone-700 font-semibold">${stylist.price}/hr</span>
+          <span style={{ color: "#18120E", fontWeight: 700, fontFamily: "system-ui, sans-serif", fontSize: "0.88rem" }}>
+            ${stylist.price}<span style={{ color: "#C9BAB0", fontWeight: 400 }}>/hr</span>
+          </span>
         </div>
 
-        <div className="mt-4 flex gap-2">
+        {/* CTAs */}
+        <div style={{ display: "flex", gap: "8px" }}>
           <Link
             href={`/stylist/${stylist.id}`}
-            className="flex-1 text-center text-sm border border-stone-200 text-stone-700 py-2 rounded-full hover:bg-stone-50 transition-colors"
+            style={{
+              flex: 1, textAlign: "center", fontSize: "0.8rem",
+              border: "1.5px solid #EDE6DC", color: "#18120E",
+              padding: "8px 0", borderRadius: "999px",
+              fontFamily: "system-ui, sans-serif", textDecoration: "none",
+              transition: "background 0.15s",
+            }}
           >
             View Profile
           </Link>
           {stylist.available && (
             <Link
               href={`/book/${stylist.id}`}
-              className="flex-1 text-center text-sm bg-stone-900 text-white py-2 rounded-full hover:bg-stone-700 transition-colors"
+              style={{
+                flex: 1, textAlign: "center", fontSize: "0.8rem",
+                background: "#BF6B4A", color: "#fff",
+                padding: "8px 0", borderRadius: "999px",
+                fontFamily: "system-ui, sans-serif", fontWeight: 500, textDecoration: "none",
+              }}
             >
               Book
             </Link>

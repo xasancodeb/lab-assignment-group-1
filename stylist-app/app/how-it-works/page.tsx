@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { howItWorks } from "@/lib/data";
+import Navbar from "@/components/Navbar";
 
 const faqs = [
   {
@@ -26,60 +27,77 @@ const faqs = [
 
 export default function HowItWorksPage() {
   return (
-    <main className="min-h-screen bg-[#faf9f7]">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#faf9f7]/90 backdrop-blur border-b border-stone-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tight">StyleBook</Link>
-          <div className="flex items-center gap-6 text-sm text-stone-600">
-            <Link href="/browse" className="hover:text-stone-900 transition-colors">Browse Stylists</Link>
-            <Link href="/how-it-works" className="text-stone-900 font-medium">How it Works</Link>
-          </div>
-        </div>
-      </nav>
+    <main style={{ minHeight: "100vh", background: "#FAF7F2" }}>
+      <Navbar active="how-it-works" />
 
-      <div className="pt-36 pb-20 px-6 max-w-4xl mx-auto">
-        <div className="text-center mb-20">
-          <h1 className="text-5xl font-bold text-stone-900 mb-4">How StyleBook Works</h1>
-          <p className="text-xl text-stone-500 max-w-2xl mx-auto">
+      <div style={{ maxWidth: "52rem", margin: "0 auto", padding: "9rem 1.5rem 5rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "5rem" }}>
+          <p style={{ color: "#BF6B4A", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.22em", marginBottom: "1rem", fontFamily: "system-ui, sans-serif" }}>
+            The Process
+          </p>
+          <h1 style={{ fontSize: "3rem", fontWeight: 700, color: "#18120E", marginBottom: "1rem" }}>
+            How StyleBook Works
+          </h1>
+          <p style={{ color: "#897870", fontSize: "1.1rem", fontFamily: "system-ui, sans-serif", lineHeight: 1.7 }}>
             From browsing to a transformed wardrobe — it&apos;s simpler than you think.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="space-y-12 mb-24">
+        <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem", marginBottom: "5rem" }}>
           {howItWorks.map((item, i) => (
-            <div key={item.step} className="flex gap-8 items-start">
-              <div className="shrink-0 w-16 h-16 bg-stone-900 text-white rounded-2xl flex items-center justify-center text-xl font-bold">
+            <div key={item.step} style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
+              <div style={{
+                flexShrink: 0, width: 56, height: 56, borderRadius: "14px",
+                background: "#18120E", color: "#BF6B4A",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "1.2rem", fontWeight: 700,
+              }}>
                 {i + 1}
               </div>
-              <div className="pt-2">
-                <h3 className="text-2xl font-bold text-stone-900 mb-3">{item.title}</h3>
-                <p className="text-stone-500 text-lg leading-relaxed max-w-xl">{item.description}</p>
+              <div style={{ paddingTop: "0.5rem" }}>
+                <h3 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#18120E", marginBottom: "0.6rem" }}>
+                  {item.title}
+                </h3>
+                <p style={{ color: "#897870", lineHeight: 1.75, fontFamily: "system-ui, sans-serif", fontSize: "0.95rem", maxWidth: "38rem" }}>
+                  {item.description}
+                </p>
               </div>
             </div>
           ))}
         </div>
 
         {/* FAQ */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-stone-900 mb-10">Frequently Asked Questions</h2>
-          <div className="space-y-6">
+        <div style={{ marginBottom: "4rem" }}>
+          <h2 style={{ fontSize: "1.8rem", fontWeight: 700, color: "#18120E", marginBottom: "2rem" }}>
+            Common Questions
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {faqs.map((faq) => (
-              <div key={faq.q} className="bg-white rounded-2xl border border-stone-100 p-6">
-                <h3 className="font-bold text-stone-900 mb-2">{faq.q}</h3>
-                <p className="text-stone-500 leading-relaxed">{faq.a}</p>
+              <div key={faq.q} style={{ background: "#fff", borderRadius: "16px", border: "1px solid #EDE6DC", padding: "1.5rem" }}>
+                <h3 style={{ fontWeight: 700, color: "#18120E", marginBottom: "0.6rem", fontSize: "0.95rem" }}>{faq.q}</h3>
+                <p style={{ color: "#897870", lineHeight: 1.7, fontFamily: "system-ui, sans-serif", fontSize: "0.88rem" }}>{faq.a}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* CTA */}
-        <div className="text-center bg-stone-900 text-white rounded-2xl p-12">
-          <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>
-          <p className="text-stone-400 mb-8">Browse stylists and book your first session today.</p>
+        <div style={{ background: "#18120E", borderRadius: "20px", padding: "4rem 2.5rem", textAlign: "center" }}>
+          <h2 style={{ color: "#FAF7F2", fontSize: "2rem", fontWeight: 700, marginBottom: "0.75rem" }}>
+            Ready to get started?
+          </h2>
+          <p style={{ color: "#897870", fontFamily: "system-ui, sans-serif", marginBottom: "2.5rem" }}>
+            Browse stylists and book your first session today.
+          </p>
           <Link
             href="/browse"
-            className="bg-white text-stone-900 px-8 py-3 rounded-full font-medium hover:bg-stone-100 transition-colors"
+            style={{
+              display: "inline-block", background: "#BF6B4A", color: "#fff",
+              padding: "0.9rem 2.25rem", borderRadius: "999px",
+              fontFamily: "system-ui, sans-serif", fontWeight: 500,
+              fontSize: "0.95rem", textDecoration: "none",
+            }}
           >
             Find Your Stylist
           </Link>

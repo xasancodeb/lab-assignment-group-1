@@ -1,8 +1,21 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 type Role = "customer" | "stylist";
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  border: "1px solid #EDE6DC",
+  borderRadius: "12px",
+  padding: "12px 16px",
+  fontSize: "1rem",
+  color: "#18120E",
+  backgroundColor: "white",
+  outline: "none",
+  boxSizing: "border-box",
+};
 
 export default function SignupPage() {
   const [role, setRole] = useState<Role>("customer");
@@ -52,23 +65,45 @@ export default function SignupPage() {
 
   if (done) {
     return (
-      <main className="min-h-screen bg-[#faf9f7] flex flex-col">
-        <nav className="px-6 py-5 border-b border-stone-200">
-          <Link href="/" className="text-xl font-bold tracking-tight">StyleBook</Link>
-        </nav>
-        <div className="flex-1 flex items-center justify-center px-6">
-          <div className="max-w-md w-full text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">✓</div>
-            <h2 className="text-2xl font-bold text-stone-900 mb-3">Account created!</h2>
-            <p className="text-stone-500 mb-8">
-              Welcome to StyleBook, <strong>{form.name.split(" ")[0]}</strong>.{" "}
+      <main style={{ minHeight: "100vh", backgroundColor: "#FAF7F2", display: "flex", flexDirection: "column" }}>
+        <Navbar />
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
+          <div style={{ maxWidth: "448px", width: "100%", textAlign: "center" }}>
+            <div
+              style={{
+                width: "64px",
+                height: "64px",
+                backgroundColor: "#E8F5EE",
+                borderRadius: "9999px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 24px",
+                fontSize: "1.75rem",
+                color: "#2D6A4F",
+              }}
+            >
+              ✓
+            </div>
+            <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#18120E", marginBottom: "12px" }}>Account created!</h2>
+            <p style={{ color: "#897870", marginBottom: "32px" }}>
+              Welcome to StyleBook, <strong style={{ color: "#18120E" }}>{form.name.split(" ")[0]}</strong>.{" "}
               {role === "stylist"
                 ? "Your stylist profile is under review and will go live within 24 hours."
                 : "Start browsing stylists and book your first session."}
             </p>
             <Link
               href={role === "customer" ? "/browse" : "/"}
-              className="bg-stone-900 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-stone-700 transition-colors"
+              style={{
+                display: "inline-block",
+                backgroundColor: "#BF6B4A",
+                color: "white",
+                padding: "12px 32px",
+                borderRadius: "9999px",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                textDecoration: "none",
+              }}
             >
               {role === "customer" ? "Browse Stylists" : "Go to Home"}
             </Link>
@@ -79,180 +114,342 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#faf9f7] flex flex-col">
-      <nav className="px-6 py-5 border-b border-stone-200 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold tracking-tight">StyleBook</Link>
-        <p className="text-sm text-stone-500">
-          Already have an account?{" "}
-          <Link href="/login" className="text-stone-900 font-medium hover:underline">Log in</Link>
-        </p>
-      </nav>
+    <main style={{ minHeight: "100vh", backgroundColor: "#FAF7F2", display: "flex", flexDirection: "column" }}>
+      <Navbar />
 
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-stone-900 mb-2">Create your account</h1>
-            <p className="text-stone-500">Join thousands of people transforming their style.</p>
-          </div>
+      <div style={{ flex: 1, display: "flex" }}>
+        {/* Left: editorial panel */}
+        <div
+          style={{
+            display: "none",
+            flex: "0 0 50%",
+            backgroundColor: "#18120E",
+            padding: "64px 56px",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+          }}
+          className="signup-left-panel"
+        >
+          <blockquote style={{ color: "#FAF7F2" }}>
+            <p style={{ fontSize: "2rem", fontWeight: 700, lineHeight: 1.2, marginBottom: "24px", letterSpacing: "-0.01em" }}>
+              &ldquo;Fashion is the armor to survive the reality of everyday life.&rdquo;
+            </p>
+            <cite style={{ fontSize: "0.875rem", color: "#897870", fontStyle: "normal" }}>— Bill Cunningham</cite>
+          </blockquote>
+        </div>
 
-          {/* Role toggle */}
-          {step === 1 && (
-            <div className="flex gap-2 bg-stone-100 rounded-xl p-1 mb-8">
-              {(["customer", "stylist"] as Role[]).map((r) => (
-                <button
-                  key={r}
-                  onClick={() => setRole(r)}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    role === r ? "bg-white text-stone-900 shadow-sm" : "text-stone-500 hover:text-stone-700"
-                  }`}
-                >
-                  {r === "customer" ? "I want styling help" : "I'm a stylist"}
-                </button>
-              ))}
+        {/* Right: form */}
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
+          <div style={{ width: "100%", maxWidth: "448px" }}>
+            <div style={{ marginBottom: "32px" }}>
+              <h1 style={{ fontSize: "1.875rem", fontWeight: 700, color: "#18120E", marginBottom: "8px" }}>Create your account</h1>
+              <p style={{ color: "#897870" }}>Join thousands of people transforming their style.</p>
             </div>
-          )}
 
-          {step === 1 && (
-            <>
-              {/* Social */}
-              <div className="space-y-3 mb-8">
-                <button className="w-full flex items-center justify-center gap-3 border border-stone-200 rounded-xl py-3 text-sm font-medium text-stone-700 hover:bg-stone-50 transition-colors">
-                  <GoogleIcon />
-                  Continue with Google
-                </button>
+            {/* Role toggle */}
+            {step === 1 && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                  backgroundColor: "#F5EDE7",
+                  borderRadius: "12px",
+                  padding: "4px",
+                  marginBottom: "32px",
+                }}
+              >
+                {(["customer", "stylist"] as Role[]).map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => setRole(r)}
+                    style={{
+                      flex: 1,
+                      padding: "10px 16px",
+                      borderRadius: "9px",
+                      fontSize: "0.875rem",
+                      fontWeight: 500,
+                      border: "none",
+                      cursor: "pointer",
+                      transition: "background-color 0.15s, color 0.15s",
+                      backgroundColor: role === r ? "#BF6B4A" : "transparent",
+                      color: role === r ? "white" : "#897870",
+                    }}
+                  >
+                    {r === "customer" ? "I want styling help" : "I'm a stylist"}
+                  </button>
+                ))}
               </div>
-              <div className="flex items-center gap-4 mb-8">
-                <div className="flex-1 h-px bg-stone-200" />
-                <span className="text-xs text-stone-400 uppercase tracking-wider">or</span>
-                <div className="flex-1 h-px bg-stone-200" />
-              </div>
+            )}
 
-              <form onSubmit={handleContinue} className="space-y-4">
+            {step === 1 && (
+              <>
+                {/* Social */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
+                  <button
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "12px",
+                      border: "1px solid #EDE6DC",
+                      borderRadius: "12px",
+                      padding: "12px 16px",
+                      fontSize: "0.875rem",
+                      fontWeight: 500,
+                      color: "#897870",
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                      transition: "background-color 0.15s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#F5EDE7")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "white")}
+                  >
+                    <GoogleIcon />
+                    Continue with Google
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "32px" }}>
+                  <div style={{ flex: 1, height: "1px", backgroundColor: "#EDE6DC" }} />
+                  <span style={{ fontSize: "0.75rem", color: "#897870", textTransform: "uppercase", letterSpacing: "0.05em" }}>or</span>
+                  <div style={{ flex: 1, height: "1px", backgroundColor: "#EDE6DC" }} />
+                </div>
+
+                <form onSubmit={handleContinue} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      placeholder="Jane Smith"
+                      style={inputStyle}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => update("email", e.target.value)}
+                      placeholder="you@example.com"
+                      style={inputStyle}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      value={form.password}
+                      onChange={(e) => update("password", e.target.value)}
+                      placeholder="Min. 8 characters"
+                      style={inputStyle}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                      Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      value={form.confirm}
+                      onChange={(e) => update("confirm", e.target.value)}
+                      placeholder="••••••••"
+                      style={inputStyle}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                    />
+                  </div>
+
+                  {error && (
+                    <p
+                      style={{
+                        fontSize: "0.875rem",
+                        color: "#9B3E28",
+                        backgroundColor: "#FEF2EE",
+                        border: "1px solid #F5C9BC",
+                        borderRadius: "12px",
+                        padding: "12px 16px",
+                      }}
+                    >
+                      {error}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#BF6B4A",
+                      color: "white",
+                      padding: "12px 16px",
+                      borderRadius: "9999px",
+                      fontWeight: 500,
+                      border: "none",
+                      cursor: "pointer",
+                      marginTop: "8px",
+                      fontSize: "1rem",
+                      transition: "background-color 0.15s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#A85A3B")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#BF6B4A")}
+                  >
+                    {role === "stylist" ? "Continue →" : "Create Account"}
+                  </button>
+
+                  <p style={{ fontSize: "0.75rem", textAlign: "center", color: "#897870" }}>
+                    By signing up you agree to our{" "}
+                    <Link href="#" style={{ color: "#BF6B4A", textDecoration: "underline" }}>Terms</Link> and{" "}
+                    <Link href="#" style={{ color: "#BF6B4A", textDecoration: "underline" }}>Privacy Policy</Link>.
+                  </p>
+                </form>
+              </>
+            )}
+
+            {/* Step 2: Stylist profile */}
+            {step === 2 && (
+              <form onSubmit={handleFinish} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div
+                  style={{
+                    backgroundColor: "#F5EDE7",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                    fontSize: "0.875rem",
+                    color: "#BF6B4A",
+                    marginBottom: "8px",
+                  }}
+                >
+                  Tell customers about your style — this becomes your public profile.
+                </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Full Name</label>
+                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                    Your Tagline
+                  </label>
                   <input
                     type="text"
-                    value={form.name}
-                    onChange={(e) => update("name", e.target.value)}
-                    placeholder="Jane Smith"
-                    className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
+                    value={form.tagline}
+                    onChange={(e) => update("tagline", e.target.value)}
+                    placeholder='e.g. "Minimal, effortless, timeless"'
+                    style={inputStyle}
+                    onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                    onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Email</label>
+                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                    Location
+                  </label>
                   <input
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => update("email", e.target.value)}
-                    placeholder="you@example.com"
-                    className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
+                    type="text"
+                    value={form.location}
+                    onChange={(e) => update("location", e.target.value)}
+                    placeholder="New York, NY"
+                    style={inputStyle}
+                    onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                    onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Password</label>
-                  <input
-                    type="password"
-                    value={form.password}
-                    onChange={(e) => update("password", e.target.value)}
-                    placeholder="Min. 8 characters"
-                    className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Confirm Password</label>
-                  <input
-                    type="password"
-                    value={form.confirm}
-                    onChange={(e) => update("confirm", e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-                  />
+                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                    Hourly Rate (USD)
+                  </label>
+                  <div style={{ position: "relative" }}>
+                    <span style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", color: "#897870" }}>$</span>
+                    <input
+                      type="number"
+                      value={form.rate}
+                      onChange={(e) => update("rate", e.target.value)}
+                      placeholder="75"
+                      min="1"
+                      style={{ ...inputStyle, paddingLeft: "32px" }}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+                    />
+                  </div>
                 </div>
 
                 {error && (
-                  <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</p>
+                  <p
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "#9B3E28",
+                      backgroundColor: "#FEF2EE",
+                      border: "1px solid #F5C9BC",
+                      borderRadius: "12px",
+                      padding: "12px 16px",
+                    }}
+                  >
+                    {error}
+                  </p>
                 )}
 
-                <button
-                  type="submit"
-                  className="w-full bg-stone-900 text-white py-3 rounded-xl font-medium hover:bg-stone-700 transition-colors mt-2"
-                >
-                  {role === "stylist" ? "Continue →" : "Create Account"}
-                </button>
-
-                <p className="text-xs text-center text-stone-400">
-                  By signing up you agree to our{" "}
-                  <Link href="#" className="underline">Terms</Link> and{" "}
-                  <Link href="#" className="underline">Privacy Policy</Link>.
-                </p>
-              </form>
-            </>
-          )}
-
-          {/* Step 2: Stylist profile */}
-          {step === 2 && (
-            <form onSubmit={handleFinish} className="space-y-4">
-              <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 text-sm text-amber-800 mb-2">
-                Tell customers about your style — this becomes your public profile.
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1.5">Your Tagline</label>
-                <input
-                  type="text"
-                  value={form.tagline}
-                  onChange={(e) => update("tagline", e.target.value)}
-                  placeholder='e.g. "Minimal, effortless, timeless"'
-                  className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1.5">Location</label>
-                <input
-                  type="text"
-                  value={form.location}
-                  onChange={(e) => update("location", e.target.value)}
-                  placeholder="New York, NY"
-                  className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1.5">Hourly Rate (USD)</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">$</span>
-                  <input
-                    type="number"
-                    value={form.rate}
-                    onChange={(e) => update("rate", e.target.value)}
-                    placeholder="75"
-                    min="1"
-                    className="w-full border border-stone-200 rounded-xl pl-8 pr-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
-                  />
+                <div style={{ display: "flex", gap: "12px", paddingTop: "8px" }}>
+                  <button
+                    type="button"
+                    onClick={() => { setStep(1); setError(""); }}
+                    style={{
+                      flex: 1,
+                      border: "1px solid #EDE6DC",
+                      color: "#18120E",
+                      padding: "12px 16px",
+                      borderRadius: "9999px",
+                      fontWeight: 500,
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                      fontSize: "1rem",
+                      transition: "background-color 0.15s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#F5EDE7")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "white")}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    style={{
+                      flex: 1,
+                      backgroundColor: "#BF6B4A",
+                      color: "white",
+                      padding: "12px 16px",
+                      borderRadius: "9999px",
+                      fontWeight: 500,
+                      border: "none",
+                      cursor: "pointer",
+                      fontSize: "1rem",
+                      transition: "background-color 0.15s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#A85A3B")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#BF6B4A")}
+                  >
+                    Create Account
+                  </button>
                 </div>
-              </div>
-
-              {error && (
-                <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</p>
-              )}
-
-              <div className="flex gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => { setStep(1); setError(""); }}
-                  className="flex-1 border border-stone-200 text-stone-700 py-3 rounded-xl font-medium hover:bg-stone-50 transition-colors"
-                >
-                  Back
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 bg-stone-900 text-white py-3 rounded-xl font-medium hover:bg-stone-700 transition-colors"
-                >
-                  Create Account
-                </button>
-              </div>
-            </form>
-          )}
+              </form>
+            )}
+          </div>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          .signup-left-panel {
+            display: flex !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }

@@ -1,28 +1,56 @@
 @import "tailwindcss";
 
+/* ─── Brand Tokens ─────────────────────────────────────────── */
 :root {
-  --background: #faf9f7;
-  --foreground: #1a1a1a;
+  --cream:       #FAF7F2;
+  --espresso:    #18120E;
+  --clay:        #BF6B4A;
+  --clay-light:  #F5EDE7;
+  --warm-gray:   #897870;
+  --border:      #EDE6DC;
+  --surface:     #FFFFFF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream:      var(--cream);
+  --color-espresso:   var(--espresso);
+  --color-clay:       var(--clay);
+  --color-clay-light: var(--clay-light);
+  --color-warm-gray:  var(--warm-gray);
+  --color-sb-border:  var(--border);
+  --color-surface:    var(--surface);
 }
+
+/* ─── Base ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--espresso);
+  font-family: Georgia, 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* ─── Animations ────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.fade-in {
-  animation: fadeIn 0.6s ease forwards;
-}
+.animate-fade-up { animation: fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-in { animation: fadeIn 0.45s ease both; }
+.animate-scale-in { animation: scaleIn 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+
+.delay-100 { animation-delay: 0.10s; }
+.delay-200 { animation-delay: 0.20s; }
+.delay-300 { animation-delay: 0.30s; }
+.delay-400 { animation-delay: 0.40s; }
