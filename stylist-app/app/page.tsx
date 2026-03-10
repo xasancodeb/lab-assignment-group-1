@@ -14,11 +14,12 @@ export default function Home() {
           <div className="flex items-center gap-6 text-sm text-stone-600">
             <Link href="/browse" className="hover:text-stone-900 transition-colors">Browse Stylists</Link>
             <Link href="/how-it-works" className="hover:text-stone-900 transition-colors">How it Works</Link>
+            <Link href="/login" className="hover:text-stone-900 transition-colors">Log In</Link>
             <Link
-              href="/browse"
+              href="/signup"
               className="bg-stone-900 text-white px-4 py-2 rounded-full text-sm hover:bg-stone-700 transition-colors"
             >
-              Book Now
+              Sign Up
             </Link>
           </div>
         </div>

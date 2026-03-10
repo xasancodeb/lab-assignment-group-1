@@ -246,12 +246,12 @@ export default function BookPage() {
                 >
                   Back
                 </button>
-                <button
-                  onClick={() => setSubmitted(true)}
-                  className="flex-1 bg-stone-900 text-white py-3 rounded-full font-medium hover:bg-stone-700 transition-colors"
+                <Link
+                  href="/payment"
+                  className="flex-1 text-center bg-stone-900 text-white py-3 rounded-full font-medium hover:bg-stone-700 transition-colors"
                 >
-                  Confirm Booking
-                </button>
+                  Continue to Payment
+                </Link>
               </div>
             </div>
           )}
