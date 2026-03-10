@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 type PaymentMethod = "card" | "paypal" | "apple";
 
@@ -17,6 +18,18 @@ function formatExpiry(value: string) {
   if (digits.length >= 3) return digits.slice(0, 2) + "/" + digits.slice(2);
   return digits;
 }
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  border: "1px solid #EDE6DC",
+  borderRadius: "12px",
+  padding: "12px 16px",
+  fontSize: "1rem",
+  color: "#18120E",
+  backgroundColor: "white",
+  outline: "none",
+  boxSizing: "border-box",
+};
 
 export default function PaymentPage() {
   const [method, setMethod] = useState<PaymentMethod>("card");
@@ -48,19 +61,41 @@ export default function PaymentPage() {
 
   if (done) {
     return (
-      <main className="min-h-screen bg-[#faf9f7] flex flex-col">
-        <nav className="px-6 py-5 border-b border-stone-200">
-          <Link href="/" className="text-xl font-bold tracking-tight">StyleBook</Link>
-        </nav>
-        <div className="flex-1 flex items-center justify-center px-6">
-          <div className="max-w-md w-full text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">✓</div>
-            <h2 className="text-2xl font-bold text-stone-900 mb-3">Payment successful!</h2>
-            <p className="text-stone-500 mb-2">Your session has been confirmed.</p>
-            <p className="text-stone-400 text-sm mb-8">A receipt has been sent to your email.</p>
+      <main style={{ minHeight: "100vh", backgroundColor: "#FAF7F2", display: "flex", flexDirection: "column" }}>
+        <Navbar />
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
+          <div style={{ maxWidth: "448px", width: "100%", textAlign: "center" }}>
+            <div
+              style={{
+                width: "80px",
+                height: "80px",
+                backgroundColor: "#E8F5EE",
+                borderRadius: "9999px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 24px",
+                fontSize: "2.25rem",
+                color: "#2D6A4F",
+              }}
+            >
+              ✓
+            </div>
+            <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#18120E", marginBottom: "12px" }}>Payment successful!</h2>
+            <p style={{ color: "#897870", marginBottom: "8px" }}>Your session has been confirmed.</p>
+            <p style={{ color: "#897870", fontSize: "0.875rem", marginBottom: "32px" }}>A receipt has been sent to your email.</p>
             <Link
               href="/"
-              className="bg-stone-900 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-stone-700 transition-colors"
+              style={{
+                display: "inline-block",
+                backgroundColor: "#BF6B4A",
+                color: "white",
+                padding: "12px 32px",
+                borderRadius: "9999px",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                textDecoration: "none",
+              }}
             >
               Back to Home
             </Link>
@@ -71,25 +106,18 @@ export default function PaymentPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#faf9f7] flex flex-col">
-      {/* Nav */}
-      <nav className="px-6 py-5 border-b border-stone-200 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold tracking-tight">StyleBook</Link>
-        <div className="flex items-center gap-2 text-xs text-stone-400">
-          <LockIcon />
-          Secured by 256-bit SSL
-        </div>
-      </nav>
+    <main style={{ minHeight: "100vh", backgroundColor: "#FAF7F2", display: "flex", flexDirection: "column" }}>
+      <Navbar />
 
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-5 gap-10">
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
+        <div style={{ width: "100%", maxWidth: "896px", display: "grid", gridTemplateColumns: "1fr", gap: "40px" }} className="payment-grid">
 
           {/* Left: payment form */}
-          <div className="lg:col-span-3">
-            <h1 className="text-2xl font-bold text-stone-900 mb-8">Payment</h1>
+          <div>
+            <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#18120E", marginBottom: "32px" }}>Payment</h1>
 
             {/* Method selector */}
-            <div className="flex gap-2 mb-8">
+            <div style={{ display: "flex", gap: "8px", marginBottom: "32px" }}>
               {([
                 { id: "card", label: "Card" },
                 { id: "paypal", label: "PayPal" },
@@ -98,11 +126,18 @@ export default function PaymentPage() {
                 <button
                   key={m.id}
                   onClick={() => setMethod(m.id)}
-                  className={`flex-1 py-2.5 rounded-xl border-2 text-sm font-medium transition-colors ${
-                    method === m.id
-                      ? "border-stone-900 bg-stone-900 text-white"
-                      : "border-stone-200 text-stone-600 hover:bg-stone-50"
-                  }`}
+                  style={{
+                    flex: 1,
+                    padding: "10px 16px",
+                    borderRadius: "12px",
+                    border: method === m.id ? "2px solid #BF6B4A" : "2px solid #EDE6DC",
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                    cursor: "pointer",
+                    transition: "background-color 0.15s, border-color 0.15s, color 0.15s",
+                    backgroundColor: method === m.id ? "#BF6B4A" : "white",
+                    color: method === m.id ? "white" : "#897870",
+                  }}
                 >
                   {m.label}
                 </button>
@@ -110,76 +145,118 @@ export default function PaymentPage() {
             </div>
 
             {method === "card" && (
-              <form onSubmit={handlePay} className="space-y-4">
+              <form onSubmit={handlePay} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Card Number</label>
-                  <div className="relative">
+                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                    Card Number
+                  </label>
+                  <div style={{ position: "relative" }}>
                     <input
                       type="text"
                       inputMode="numeric"
                       value={card.number}
                       onChange={(e) => updateCard("number", formatCardNumber(e.target.value))}
                       placeholder="1234 5678 9012 3456"
-                      className="w-full border border-stone-200 rounded-xl px-4 py-3 pr-12 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition font-mono tracking-wider"
+                      style={{ ...inputStyle, paddingRight: "48px", fontFamily: "monospace", letterSpacing: "0.05em" }}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
                     />
-                    <CardIcon className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-300" />
+                    <CardIcon style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", color: "#C9BAB0" }} />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Cardholder Name</label>
+                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                    Cardholder Name
+                  </label>
                   <input
                     type="text"
                     value={card.name}
                     onChange={(e) => updateCard("name", e.target.value)}
                     placeholder="Jane Smith"
-                    className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
+                    style={inputStyle}
+                    onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                    onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-1.5">Expiry</label>
+                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                      Expiry
+                    </label>
                     <input
                       type="text"
                       inputMode="numeric"
                       value={card.expiry}
                       onChange={(e) => updateCard("expiry", formatExpiry(e.target.value))}
                       placeholder="MM/YY"
-                      className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition font-mono"
+                      style={{ ...inputStyle, fontFamily: "monospace" }}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-1.5">CVV</label>
+                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "#18120E", marginBottom: "6px" }}>
+                      CVV
+                    </label>
                     <input
                       type="text"
                       inputMode="numeric"
                       value={card.cvv}
                       onChange={(e) => updateCard("cvv", e.target.value.replace(/\D/g, "").slice(0, 4))}
                       placeholder="123"
-                      className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 transition font-mono"
+                      style={{ ...inputStyle, fontFamily: "monospace" }}
+                      onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 0 2px #BF6B4A")}
+                      onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
                     />
                   </div>
                 </div>
 
-                <label className="flex items-center gap-3 text-sm text-stone-600 cursor-pointer pt-1">
+                <label style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.875rem", color: "#897870", cursor: "pointer", paddingTop: "4px" }}>
                   <input
                     type="checkbox"
                     checked={saveCard}
                     onChange={(e) => setSaveCard(e.target.checked)}
-                    className="accent-stone-800"
+                    style={{ accentColor: "#BF6B4A" }}
                   />
                   Save card for future bookings
                 </label>
 
                 {error && (
-                  <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</p>
+                  <p
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "#9B3E28",
+                      backgroundColor: "#FEF2EE",
+                      border: "1px solid #F5C9BC",
+                      borderRadius: "12px",
+                      padding: "12px 16px",
+                    }}
+                  >
+                    {error}
+                  </p>
                 )}
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-stone-900 text-white py-3.5 rounded-xl font-medium hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#BF6B4A",
+                    color: "white",
+                    padding: "14px 16px",
+                    borderRadius: "9999px",
+                    fontWeight: 500,
+                    border: "none",
+                    cursor: loading ? "not-allowed" : "pointer",
+                    opacity: loading ? 0.5 : 1,
+                    marginTop: "8px",
+                    fontSize: "1rem",
+                    transition: "background-color 0.15s",
+                  }}
+                  onMouseEnter={(e) => { if (!loading) e.currentTarget.style.backgroundColor = "#A85A3B"; }}
+                  onMouseLeave={(e) => { if (!loading) e.currentTarget.style.backgroundColor = "#BF6B4A"; }}
                 >
                   {loading ? "Processing…" : "Pay $85.00"}
                 </button>
@@ -187,11 +264,27 @@ export default function PaymentPage() {
             )}
 
             {method === "paypal" && (
-              <div className="text-center py-12 border-2 border-dashed border-stone-200 rounded-2xl">
-                <p className="text-stone-500 mb-6">You'll be redirected to PayPal to complete payment.</p>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "48px 32px",
+                  border: "2px dashed #EDE6DC",
+                  borderRadius: "16px",
+                }}
+              >
+                <p style={{ color: "#897870", marginBottom: "24px" }}>You'll be redirected to PayPal to complete payment.</p>
                 <button
                   onClick={() => { setLoading(true); setTimeout(() => { setLoading(false); setDone(true); }, 1500); }}
-                  className="bg-[#0070BA] text-white px-10 py-3 rounded-xl font-bold hover:bg-[#005ea6] transition-colors"
+                  style={{
+                    backgroundColor: "#0070BA",
+                    color: "white",
+                    padding: "12px 40px",
+                    borderRadius: "12px",
+                    fontWeight: 700,
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "1rem",
+                  }}
                 >
                   {loading ? "Redirecting…" : "Pay with PayPal"}
                 </button>
@@ -199,11 +292,30 @@ export default function PaymentPage() {
             )}
 
             {method === "apple" && (
-              <div className="text-center py-12 border-2 border-dashed border-stone-200 rounded-2xl">
-                <p className="text-stone-500 mb-6">Complete with Face ID or Touch ID.</p>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "48px 32px",
+                  border: "2px dashed #EDE6DC",
+                  borderRadius: "16px",
+                }}
+              >
+                <p style={{ color: "#897870", marginBottom: "24px" }}>Complete with Face ID or Touch ID.</p>
                 <button
                   onClick={() => { setLoading(true); setTimeout(() => { setLoading(false); setDone(true); }, 1500); }}
-                  className="bg-black text-white px-10 py-3 rounded-xl font-medium hover:bg-stone-800 transition-colors flex items-center gap-2 mx-auto"
+                  style={{
+                    backgroundColor: "#18120E",
+                    color: "white",
+                    padding: "12px 40px",
+                    borderRadius: "12px",
+                    fontWeight: 500,
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "1rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
                 >
                   <AppleIcon />
                   {loading ? "Authenticating…" : "Pay with Apple Pay"}
@@ -213,49 +325,109 @@ export default function PaymentPage() {
           </div>
 
           {/* Right: order summary */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl border border-stone-100 p-6 sticky top-8">
-              <h2 className="font-bold text-stone-900 mb-5">Order Summary</h2>
+          <div className="payment-summary">
+            <div
+              style={{
+                backgroundColor: "white",
+                borderRadius: "16px",
+                border: "1px solid #EDE6DC",
+                padding: "24px",
+                position: "sticky",
+                top: "32px",
+              }}
+            >
+              <h2 style={{ fontWeight: 700, color: "#18120E", marginBottom: "20px", fontSize: "1rem" }}>Order Summary</h2>
 
               {/* Stylist */}
-              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-stone-100">
-                <div className="w-10 h-10 rounded-full bg-[#D4A574] flex items-center justify-center text-white font-bold text-sm shrink-0">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginBottom: "24px",
+                  paddingBottom: "24px",
+                  borderBottom: "1px solid #EDE6DC",
+                }}
+              >
+                <div
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "9999px",
+                    backgroundColor: "#D4A574",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: "0.875rem",
+                    flexShrink: 0,
+                  }}
+                >
                   A
                 </div>
                 <div>
-                  <p className="font-semibold text-stone-800 text-sm">Amara Osei</p>
-                  <p className="text-stone-400 text-xs">Wardrobe Audit · In-Person</p>
+                  <p style={{ fontWeight: 600, color: "#18120E", fontSize: "0.875rem" }}>Amara Osei</p>
+                  <p style={{ color: "#897870", fontSize: "0.75rem" }}>Wardrobe Audit · In-Person</p>
                 </div>
               </div>
 
-              <div className="space-y-3 text-sm mb-6">
-                <div className="flex justify-between text-stone-600">
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "0.875rem", marginBottom: "24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", color: "#897870" }}>
                   <span>Session (2 hrs × $85)</span>
                   <span>$170.00</span>
                 </div>
-                <div className="flex justify-between text-green-600">
+                <div style={{ display: "flex", justifyContent: "space-between", color: "#2D6A4F" }}>
                   <span>First-session discount (20%)</span>
                   <span>−$34.00</span>
                 </div>
-                <div className="flex justify-between text-stone-600">
+                <div style={{ display: "flex", justifyContent: "space-between", color: "#897870" }}>
                   <span>Platform fee</span>
                   <span>$5.00</span>
                 </div>
-                <div className="flex justify-between font-bold text-stone-900 border-t border-stone-100 pt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontWeight: 700,
+                    color: "#18120E",
+                    borderTop: "1px solid #EDE6DC",
+                    paddingTop: "12px",
+                  }}
+                >
                   <span>Total</span>
                   <span>$141.00</span>
                 </div>
               </div>
 
-              <div className="bg-stone-50 rounded-xl p-4 text-xs text-stone-500 space-y-1.5">
-                <p className="flex items-center gap-2"><span>✓</span> Payment collected after session</p>
-                <p className="flex items-center gap-2"><span>✓</span> Full refund if cancelled 24hrs before</p>
-                <p className="flex items-center gap-2"><span>✓</span> Satisfaction guarantee</p>
+              <div
+                style={{
+                  backgroundColor: "#F5EDE7",
+                  borderRadius: "12px",
+                  padding: "16px",
+                  fontSize: "0.75rem",
+                  color: "#897870",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                }}
+              >
+                <p style={{ display: "flex", alignItems: "center", gap: "8px" }}><span>✓</span> Payment collected after session</p>
+                <p style={{ display: "flex", alignItems: "center", gap: "8px" }}><span>✓</span> Full refund if cancelled 24hrs before</p>
+                <p style={{ display: "flex", alignItems: "center", gap: "8px" }}><span>✓</span> Satisfaction guarantee</p>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          .payment-grid {
+            grid-template-columns: 3fr 2fr !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
@@ -269,9 +441,9 @@ function LockIcon() {
   );
 }
 
-function CardIcon({ className }: { className?: string }) {
+function CardIcon({ style }: { style?: React.CSSProperties }) {
   return (
-    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg style={style} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
       <line x1="1" y1="10" x2="23" y2="10"/>
     </svg>
