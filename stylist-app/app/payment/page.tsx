@@ -1,7 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { addBooking, showToast } from "@/lib/store";
+import { stylists } from "@/lib/data";
 
 type PaymentMethod = "card" | "paypal" | "apple";
 
@@ -31,13 +34,21 @@ const inputStyle: React.CSSProperties = {
   boxSizing: "border-box",
 };
 
-export default function PaymentPage() {
+function PaymentContent() {
+  const searchParams = useSearchParams();
   const [method, setMethod] = useState<PaymentMethod>("card");
   const [card, setCard] = useState({ number: "", name: "", expiry: "", cvv: "" });
   const [saveCard, setSaveCard] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+
+  // Booking context from URL params
+  const stylistId = searchParams.get("stylist") ?? "1";
+  const service = searchParams.get("service") ?? "Wardrobe Session";
+  const date = searchParams.get("date") ?? "TBD";
+  const time = searchParams.get("time") ?? "TBD";
+  const stylist = stylists.find((s) => s.id === stylistId) ?? stylists[0];
 
   function updateCard(field: string, value: string) {
     setCard((c) => ({ ...c, [field]: value }));
@@ -56,7 +67,23 @@ export default function PaymentPage() {
     }
 
     setLoading(true);
-    setTimeout(() => { setLoading(false); setDone(true); }, 1500);
+    setTimeout(() => {
+      setLoading(false);
+      addBooking({
+        id: `b_${Date.now()}`,
+        stylistId: stylist.id,
+        stylistName: stylist.name,
+        stylistAvatar: stylist.avatar,
+        service,
+        date,
+        time,
+        price: Math.round(stylist.price * 2 * 0.8 + 5),
+        status: "upcoming",
+        createdAt: new Date().toISOString(),
+      });
+      showToast(`Booking confirmed with ${stylist.name}!`);
+      setDone(true);
+    }, 1500);
   }
 
   if (done) {
@@ -85,7 +112,7 @@ export default function PaymentPage() {
             <p style={{ color: "#897870", marginBottom: "8px" }}>Your session has been confirmed.</p>
             <p style={{ color: "#897870", fontSize: "0.875rem", marginBottom: "32px" }}>A receipt has been sent to your email.</p>
             <Link
-              href="/"
+              href="/dashboard"
               style={{
                 display: "inline-block",
                 backgroundColor: "#BF6B4A",
@@ -97,7 +124,7 @@ export default function PaymentPage() {
                 textDecoration: "none",
               }}
             >
-              Back to Home
+              View My Bookings
             </Link>
           </div>
         </div>
@@ -456,5 +483,13 @@ function AppleIcon() {
       <path d="M14.535 9.56c-.022-2.295 1.875-3.408 1.96-3.461-1.07-1.563-2.732-1.777-3.322-1.797-1.407-.144-2.754.838-3.467.838-.724 0-1.835-.82-3.02-.797C5.03 4.367 3.43 5.449 2.556 7.093c-1.773 3.066-.455 7.608 1.267 10.099.843 1.22 1.845 2.586 3.155 2.537 1.27-.052 1.748-.817 3.283-.817 1.524 0 1.96.817 3.293.79 1.365-.023 2.23-1.24 3.064-2.465.97-1.414 1.368-2.786 1.39-2.856-.03-.014-2.661-1.022-2.687-4.055l.214.234z"/>
       <path d="M12.19 2.987c.7-.853 1.174-2.036 1.044-3.217-1.01.042-2.228.674-2.95 1.526-.649.752-1.218 1.953-1.065 3.107 1.126.088 2.274-.574 2.971-1.416z"/>
     </svg>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense>
+      <PaymentContent />
+    </Suspense>
   );
 }

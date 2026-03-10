@@ -403,7 +403,7 @@ export default function BookPage() {
                   Back
                 </button>
                 <Link
-                  href="/payment"
+                  href={`/payment?stylist=${stylist.id}&service=${encodeURIComponent(sessionTypes.find(t => t.id === selectedType)?.label ?? "Session")}&date=${encodeURIComponent(selectedDate)}&time=${encodeURIComponent(selectedTime)}`}
                   style={{
                     flex: 1,
                     textAlign: "center",

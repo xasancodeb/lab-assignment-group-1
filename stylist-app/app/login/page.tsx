@@ -1,9 +1,12 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { setUser, showToast } from "@/lib/store";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,11 +22,20 @@ export default function LoginPage() {
     }
 
     setLoading(true);
-    // Simulate auth — replace with real auth logic
     setTimeout(() => {
       setLoading(false);
-      setError("Invalid email or password. (Demo mode — no real auth yet)");
-    }, 1000);
+      // Demo auth: any email/password works
+      const name = email.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      setUser({
+        id: `u_${Date.now()}`,
+        name,
+        email,
+        role: "customer",
+        avatar: "#BF6B4A",
+      });
+      showToast(`Welcome back, ${name}!`);
+      router.push("/dashboard");
+    }, 900);
   }
 
   return (

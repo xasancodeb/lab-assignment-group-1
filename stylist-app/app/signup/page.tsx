@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { setUser, showToast } from "@/lib/store";
 
 type Role = "customer" | "stylist";
 
@@ -18,6 +20,7 @@ const inputStyle: React.CSSProperties = {
 };
 
 export default function SignupPage() {
+  const router = useRouter();
   const [role, setRole] = useState<Role>("customer");
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
@@ -50,7 +53,13 @@ export default function SignupPage() {
     const err = validateStep1();
     if (err) { setError(err); return; }
     setError("");
-    if (role === "stylist") { setStep(2); } else { setDone(true); }
+    if (role === "stylist") {
+      setStep(2);
+    } else {
+      setUser({ id: `u_${Date.now()}`, name: form.name, email: form.email, role: "customer", avatar: "#BF6B4A" });
+      showToast(`Welcome to StyleBook, ${form.name}!`);
+      setDone(true);
+    }
   }
 
   function handleFinish(e: React.FormEvent) {
@@ -60,6 +69,8 @@ export default function SignupPage() {
       return;
     }
     setError("");
+    setUser({ id: `u_${Date.now()}`, name: form.name, email: form.email, role: "stylist", avatar: "#8B9DC3", location: form.location, bio: form.tagline });
+    showToast(`Welcome to StyleBook, ${form.name}!`);
     setDone(true);
   }
 
@@ -93,7 +104,7 @@ export default function SignupPage() {
                 : "Start browsing stylists and book your first session."}
             </p>
             <Link
-              href={role === "customer" ? "/browse" : "/"}
+              href={role === "customer" ? "/dashboard" : "/stylist-dashboard"}
               style={{
                 display: "inline-block",
                 backgroundColor: "#BF6B4A",
